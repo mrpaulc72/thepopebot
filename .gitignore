@@ -6,8 +6,13 @@ secrets.json
 *.pem
 *.key
 
-# Workspace (cloned repos)
-workspace/
+# Workspace - only track job.md and logs/*.jsonl
+workspace/*
+!workspace/job.md
+!workspace/logs
+workspace/logs/*
+!workspace/logs/*.jsonl
+!workspace/logs/.gitkeep
 
 # Node
 node_modules/
@@ -24,7 +29,6 @@ Thumbs.db
 
 # Logs
 *.log
-logs/
 
 # Temporary files
 tmp/
