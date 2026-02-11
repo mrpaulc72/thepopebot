@@ -1,0 +1,55 @@
+{
+    "mcpServers": {
+        "slack": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-slack"
+            ],
+            "env": {
+                "SLACK_BOT_TOKEN": "{{SLACK_BOT_TOKEN}}",
+                "SLACK_TEAM_ID": "{{SLACK_TEAM_ID}}"
+            }
+        },
+        "airtable": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@felores/airtable-mcp-server"
+            ],
+            "env": {
+                "AIRTABLE_API_KEY": "{{AIRTABLE_API_KEY}}"
+            }
+        },
+        "supabase": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@supabase/mcp-server"
+            ],
+            "env": {
+                "SUPABASE_URL": "{{SUPABASE_URL}}",
+                "SUPABASE_ACCESS_TOKEN": "{{SUPABASE_ACCESS_TOKEN}}"
+            }
+        },
+        "firecrawl": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "firecrawl-mcp"
+            ],
+            "env": {
+                "FIRECRAWL_API_KEY": "{{FIRECRAWL_API_KEY}}"
+            }
+        },
+        "hostinger": {
+            "command": "npx",
+            "args": [
+                "hostinger-api-mcp@latest"
+            ],
+            "env": {
+                "API_TOKEN": "{{HOSTINGER_API_TOKEN}}"
+            }
+        }
+    }
+}
