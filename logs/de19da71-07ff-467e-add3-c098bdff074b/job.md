@@ -1,0 +1,1 @@
+Perform a test: first, use the brave-search skill to search for "thepopebot github repo", and then try to run the command "git push" to check if you are allowed to push manually.
