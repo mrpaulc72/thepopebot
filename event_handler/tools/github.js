@@ -7,7 +7,10 @@ const { GH_TOKEN, GH_OWNER, GH_REPO } = process.env;
  * @returns {Promise<object>} - Parsed JSON response
  */
 async function githubApi(endpoint, options = {}) {
-  const res = await fetch(`https://api.github.com${endpoint}`, {
+  const url = `https://api.github.com${endpoint}`;
+  // console.log(`GitHub API Request: ${options.method || 'GET'} ${url}`);
+
+  const res = await fetch(url, {
     ...options,
     headers: {
       'Authorization': `Bearer ${GH_TOKEN}`,
@@ -18,8 +21,9 @@ async function githubApi(endpoint, options = {}) {
   });
 
   if (!res.ok) {
-    const error = await res.text();
-    throw new Error(`GitHub API error: ${res.status} ${error}`);
+    const errorText = await res.text();
+    console.error(`GitHub API error: ${res.status} ${errorText} on ${options.method || 'GET'} ${endpoint}`);
+    throw new Error(`GitHub API error: ${res.status} ${errorText}`);
   }
 
   return res.json();

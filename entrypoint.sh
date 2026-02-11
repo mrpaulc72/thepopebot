@@ -73,13 +73,24 @@ PROMPT="
 
 $(cat /job/logs/${JOB_ID}/job.md)"
 
+# Build extension flags
+EXTENSION_FLAGS=""
+if [ -d "/job/.pi/extensions" ]; then
+    for ext in /job/.pi/extensions/*/index.ts; do
+        if [ -f "$ext" ]; then
+            EXTENSION_FLAGS="$EXTENSION_FLAGS --extension $ext"
+        fi
+    done
+fi
+
 PROVIDER=${AI_PROVIDER:-anthropic}
 MODEL_FLAGS="--provider $PROVIDER"
 if [ -n "$MODEL" ]; then
     MODEL_FLAGS="$MODEL_FLAGS --model $MODEL"
 fi
 
-pi $MODEL_FLAGS -p "$PROMPT" --session-dir "${LOG_DIR}"
+pi $MODEL_FLAGS $EXTENSION_FLAGS -p "$PROMPT" --session-dir "${LOG_DIR}"
+
 
 # 2. Commit changes + logs
 git add -A
