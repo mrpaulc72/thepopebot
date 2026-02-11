@@ -9,11 +9,10 @@ const { loadCrons } = require('./cron');
 const { loadTriggers } = require('./triggers');
 const { setWebhook, sendMessage, formatJobNotification, downloadFile, reactToMessage, startTypingIndicator } = require('./tools/telegram');
 const { isWhisperEnabled, transcribeAudio } = require('./tools/openai');
-const { chat } = require('./claude');
+const { chat, getApiKey } = require('./ai');
 const { toolDefinitions, toolExecutors } = require('./claude/tools');
 const { getHistory, updateHistory } = require('./claude/conversation');
 const { githubApi, getJobStatus } = require('./tools/github');
-const { getApiKey } = require('./claude');
 const { render_md } = require('./utils/render-md');
 
 const app = express();
@@ -129,7 +128,7 @@ app.post('/telegram/webhook', async (req, res) => {
     }
 
     // Acknowledge receipt with a thumbs up (await so it completes before typing indicator starts)
-    await reactToMessage(telegramBotToken, chatId, message.message_id).catch(() => {});
+    await reactToMessage(telegramBotToken, chatId, message.message_id).catch(() => { });
 
     if (message.voice) {
       // Handle voice messages
@@ -168,7 +167,7 @@ app.post('/telegram/webhook', async (req, res) => {
         await sendMessage(telegramBotToken, chatId, response);
       } catch (err) {
         console.error('Failed to process message with Claude:', err);
-        await sendMessage(telegramBotToken, chatId, 'Sorry, I encountered an error processing your message.').catch(() => {});
+        await sendMessage(telegramBotToken, chatId, 'Sorry, I encountered an error processing your message.').catch(() => { });
       } finally {
         stopTyping();
       }

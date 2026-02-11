@@ -73,9 +73,10 @@ PROMPT="
 
 $(cat /job/logs/${JOB_ID}/job.md)"
 
-MODEL_FLAGS=""
+PROVIDER=${AI_PROVIDER:-anthropic}
+MODEL_FLAGS="--provider $PROVIDER"
 if [ -n "$MODEL" ]; then
-    MODEL_FLAGS="--provider anthropic --model $MODEL"
+    MODEL_FLAGS="$MODEL_FLAGS --model $MODEL"
 fi
 
 pi $MODEL_FLAGS -p "$PROMPT" --session-dir "${LOG_DIR}"
